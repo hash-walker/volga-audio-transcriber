@@ -26,7 +26,7 @@ func NormalizeToWAV(inputPath string) (string, error) {
 	outputPath := strings.TrimSuffix(inputPath, ext) + "_normalised.wav"
 
 	if ext == ".wav" && isCorrectFormat(inputPath) {
-		return outputPath, nil
+		return inputPath, nil
 	}
 
 	cmd := exec.Command("ffmpeg",
@@ -53,7 +53,6 @@ func isCorrectFormat(path string) bool {
 		"-select_streams", "a:0",
 		"-show_entries", "stream=sample_rate,channels,sample_fmt",
 		"-of", "csv=p=0",
-		"-sample_fmt", "s16",
 		path,
 	)
 	output, err := cmd.Output()
