@@ -68,7 +68,7 @@ func SplitAudio(inputPath, chunkDir string) ([]AudioChunk, error) {
 		)
 
 		if output, chunkErr := cmd.CombinedOutput(); chunkErr != nil {
-			return nil, fmt.Errorf("chunk %d failed: %w\n%s", i, err, string(output))
+			return nil, fmt.Errorf("chunk %d failed: %w\n%s", i, chunkErr, string(output))
 		}
 
 		chunks = append(chunks, AudioChunk{
@@ -90,6 +90,7 @@ func GetDuration(path string) (time.Duration, error) {
 		"-v", "error",
 		"-show_entries", "format=duration",
 		"-of", "default=noprint_wrappers=1:nokey=1",
+		path,
 	)
 
 	output, err := cmd.Output()
