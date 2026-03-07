@@ -4,10 +4,12 @@ import "time"
 
 // Segment represents a single transcribed segment with timing info.
 type Segment struct {
-	Start    time.Duration `json:"start"`
-	End      time.Duration `json:"end"`
-	Text     string        `json:"text"`
-	Language string        `json:"language,omitempty"`
+	Start          time.Duration `json:"start"`
+	End            time.Duration `json:"end"`
+	StartTimestamp string        `json:"start_ts"`
+	EndTimestamp   string        `json:"end_ts"`
+	Text           string        `json:"text"`
+	Language       string        `json:"language,omitempty"`
 }
 
 // TranscriptionResult is the full output of a transcription job.

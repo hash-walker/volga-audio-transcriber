@@ -80,13 +80,26 @@ func (w *WhisperEngine) TranscribeChunk(chunkPath string, offsetDuration time.Du
 
 	segments := make([]Segment, len(result.Segments))
 	for i, seg := range result.Segments {
+		start := offsetDuration + time.Duration(seg.Start*float64(time.Second))
+		end := offsetDuration + time.Duration(seg.End*float64(time.Second))
 		segments[i] = Segment{
-			Start:    offsetDuration + time.Duration(seg.Start*float64(time.Second)),
-			End:      offsetDuration + time.Duration(seg.End*float64(time.Second)),
-			Text:     seg.Text,
-			Language: result.Language,
+			Start:          start,
+			End:            end,
+			StartTimestamp: formatDuration(start),
+			EndTimestamp:   formatDuration(end),
+			Text:           seg.Text,
+			Language:       result.Language,
 		}
 	}
 
 	return segments, nil
+}
+
+func formatDuration(d time.Duration) string {
+	h := d / time.Hour
+	d -= h * time.Hour
+	m := d / time.Minute
+	d -= m * time.Minute
+	s := d / time.Second
+	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
 }
