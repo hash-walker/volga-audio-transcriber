@@ -2,15 +2,21 @@ package api
 
 import (
 	"net/http"
+
+	"github.com/hash-walker/volga-audio-transcriber/transcriber"
 )
 
 type Server struct {
+	pipeline  *transcriber.Pipeline
 	uploadDir string
+	resultDir string
 }
 
-func NewServer(uploadDir string) *Server {
+func NewServer(uploadDir, resultDir string, pipeline *transcriber.Pipeline) *Server {
 	return &Server{
+		pipeline:  pipeline,
 		uploadDir: uploadDir,
+		resultDir: resultDir,
 	}
 }
 

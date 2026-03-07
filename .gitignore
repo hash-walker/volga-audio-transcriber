@@ -1,0 +1,6 @@
+venv/
+transcriptions/
+*.wav
+*.m4a
+.idea/
+volga-audio-transcriber
